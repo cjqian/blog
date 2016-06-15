@@ -37,9 +37,9 @@
                     @Html.DisplayFor(modelItem => item.PublishDate)
                 </td>
 
-                <td>
+                <td><a asp-action="Details" asp-route-id="@item.ID">
                     @Html.DisplayFor(modelItem => item.Title)
-                </td>
+                </a></td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Content)
                 </td>
@@ -48,9 +48,14 @@
                 </td>
 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    @if (item.Author == User.Identity.Name){
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> 
+                    }
+
+                    @if (item.Author == User.Identity.Name)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    }                   
                 </td>
             </tr>
         }

@@ -2,21 +2,34 @@
 @model IEnumerable<blog.Models.Entry>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "My Posts";
 }
 
-<h2>Profile</h2>
+<h2>My Posts</h2>
 
+@if (!User.Identity.IsAuthenticated)
+{
+    <p>Sorry! You need to log in to see your posts!</p>
+
+}
 @foreach (var item in Model.Where(n => n.Author == User.Identity.Name))
 {
-    <div id="entry-container">
+    <div class="entry-container">
         <i>@Html.DisplayFor(modelItem => item.PublishDate)</i>
-        <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
-        <p>
-            @Html.DisplayFor(modelItem => item.Content)
-        </p>
-        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+        <a asp-action="Details" asp-route-id="@item.ID"><h3>@Html.DisplayFor(modelItem => item.Title)</h3></a>
+            <p>
+                @Html.DisplayFor(modelItem => item.Content)
+            </p>
+            @if (item.Author == User.Identity.Name)
+            {
+            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+            }
+          
+            @if (item.Author == User.Identity.Name)
+            {
+            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            }
+ 
+        <a asp-action="Comment" asp-route-id="@item.ID">Comment</a>
     </div>
 }
