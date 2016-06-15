@@ -25,6 +25,18 @@ namespace blog.Controllers
             return View(await _context.Entry.ToListAsync());
         }
 
+        // GET: Entries
+        public async Task<IActionResult> Explore()
+        {
+            return View(await _context.Entry.ToListAsync());
+        }
+
+
+        public async Task<IActionResult> Profile()
+        {
+            return View(await _context.Entry.ToListAsync());
+        }
+
         // GET: Entries/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -53,7 +65,7 @@ namespace blog.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Author,Content,PublishDate,Title")] Entry entry)
+        public async Task<IActionResult> Create([Bind("ID,Author,Content,PublishDate,Title,IsPublic")] Entry entry)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +100,7 @@ namespace blog.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Author,Content,PublishDate,Title")] Entry entry)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Author,Content,PublishDate,Title,IsPublic")] Entry entry)
         {
             if (id != entry.ID)
             {
@@ -150,5 +162,6 @@ namespace blog.Controllers
         {
             return _context.Entry.Any(e => e.ID == id);
         }
+
     }
 }

@@ -23,14 +23,14 @@ namespace blog.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            return RedirectToAction("Profile", "Entries");
         }
 
-        public IActionResult Contact()
+        public IActionResult Explore()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Your Explore page.";
 
-            return View();
+            return RedirectToAction("Explore", "Entries");
         }
 
         public IActionResult Error()

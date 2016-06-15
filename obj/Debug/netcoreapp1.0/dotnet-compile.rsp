@@ -238,6 +238,8 @@ C:\Users\t-crqian\Documents\Visual Studio 2015\Projects\blog\src\blog\Data\Migra
 C:\Users\t-crqian\Documents\Visual Studio 2015\Projects\blog\src\blog\Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs
 C:\Users\t-crqian\Documents\Visual Studio 2015\Projects\blog\src\blog\Data\Migrations\20160615182812_Initial.cs
 C:\Users\t-crqian\Documents\Visual Studio 2015\Projects\blog\src\blog\Data\Migrations\20160615182812_Initial.Designer.cs
+C:\Users\t-crqian\Documents\Visual Studio 2015\Projects\blog\src\blog\Data\Migrations\20160615194228_IsPublic.cs
+C:\Users\t-crqian\Documents\Visual Studio 2015\Projects\blog\src\blog\Data\Migrations\20160615194228_IsPublic.Designer.cs
 C:\Users\t-crqian\Documents\Visual Studio 2015\Projects\blog\src\blog\Data\Migrations\ApplicationDbContextModelSnapshot.cs
 C:\Users\t-crqian\Documents\Visual Studio 2015\Projects\blog\src\blog\Models\ApplicationUser.cs
 C:\Users\t-crqian\Documents\Visual Studio 2015\Projects\blog\src\blog\Models\Entry.cs

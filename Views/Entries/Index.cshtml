@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Dashboard</h2>
+<h2>Dashboaro</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -23,6 +23,10 @@
 
             <th>
                 @Html.DisplayNameFor(model => model.Content)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.IsPublic)
             </th>
           
 
@@ -42,7 +46,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Content)
             </td>
-
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPublic)
+            </td>
 
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

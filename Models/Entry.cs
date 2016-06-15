@@ -12,6 +12,7 @@ namespace blog.Models
         public int ID { get; set; }
         public string Content { get; set; }
 
+        public Boolean IsPublic { get; set; }
         public DateTime PublishDate { get; set; }
     }
 }
