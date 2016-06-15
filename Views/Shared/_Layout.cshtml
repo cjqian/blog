@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -16,6 +17,10 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
+
+    <!--fonts-->
+    <link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -27,12 +32,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-controller="Home" asp-action="Index" class="navbar-brand">Blogger</a>
+                <a asp-controller="Home" asp-action="Index" class="navbar-brand">The Khaled Blogging Experience</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-controller="Home" asp-action="Profile">Profile</a></li>
+               
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-controller="Home" asp-action="Profile">My Posts</a></li>
+                    }
+
                     <li><a asp-controller="Home" asp-action="Explore">Explore</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
@@ -43,7 +52,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2016 - Crystal Qian</p>
+            <p style="font-size: 12px">&copy; 2016 - Crystal Qian. Quotes taken from <a href="http://khaledipsum.com/">Khaled Ipsum.</a></p>
         </footer>
     </div>
 
