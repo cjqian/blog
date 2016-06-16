@@ -24,5 +24,7 @@ namespace blog.Data
         }
 
         public DbSet<Entry> Entry { get; set; }
+
+        public DbSet<Comment> Comment { get; set; }
     }
 }

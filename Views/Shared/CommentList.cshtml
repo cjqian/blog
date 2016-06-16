@@ -1,0 +1,18 @@
+@model IEnumerable<blog.Models.Comment>
+
+
+
+@foreach (var item in Model) {
+    <div class="comment-container">
+        <b>@Html.DisplayFor(modelItem => item.Author)</b> said at <b>@Html.DisplayFor(modelItem => item.PublishDate)</b>:<br/>
+        <p>&nbsp;&nbsp; @Html.DisplayFor(modelItem => item.Content)</p>
+
+    </div>
+
+    @if (User.Identity.Name == item.Author)
+    {
+        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+    }
+
+
+}

@@ -10,34 +10,28 @@ using blog.Models;
 
 namespace blog.Controllers
 {
-    public class EntriesController : Controller
+    public class CommentsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EntriesController(ApplicationDbContext context)
+        public CommentsController(ApplicationDbContext context)
         {
             _context = context;    
         }
 
-        // GET: Entries
+        // GET: Comments
         public async Task<IActionResult> Index()
         {
-            return RedirectToAction("Index", "Home");
+            return View(await _context.Comment.ToListAsync());
         }
 
-        // GET: Entries
-        public async Task<IActionResult> Explore()
+        // GET: Comments
+        public async Task<IActionResult> List(int? entryID)
         {
-            return View(await _context.Entry.ToListAsync());
+            return View(await _context.Comment.ToListAsync());
         }
 
-
-        public async Task<IActionResult> Profile()
-        {
-            return View(await _context.Entry.ToListAsync());
-        }
-
-        // GET: Entries/Details/5
+        // GET: Comments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,41 +39,52 @@ namespace blog.Controllers
                 return NotFound();
             }
 
-            var entry = await _context.Entry.SingleOrDefaultAsync(m => m.ID == id);
-            if (entry == null)
+            var comment = await _context.Comment.SingleOrDefaultAsync(m => m.ID == id);
+            if (comment == null)
             {
                 return NotFound();
             }
 
-            return View(entry);
+            return View(comment);
         }
 
-        // GET: Entries/Create
+        // GET: Comments/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Entries/Create
+        // POST: Comments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Author,Content,PublishDate,Title,IsPublic")] Entry entry)
+        public async Task<IActionResult> Create([Bind("ID,Content,EntryID")] Comment comment)
         {
             if (ModelState.IsValid)
             {
-                entry.Author = User.Identity.Name;
-                entry.PublishDate = DateTime.Now;
+                comment.Author = User.Identity.Name;
+                
+                if (comment.Author == null)
+                {
+                    comment.Author = "Anonymous";
+                }
+                comment.PublishDate = DateTime.Now;
 
-                _context.Add(entry);
+                _context.Add(comment);
+
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+
+                //return RedirectToAction("Index");
+                //return RedirectToAction("Explore", "Entries");
+                return RedirectToAction("Details", "Entries", new { ID = comment.EntryID });
             }
-            return View(entry);
+
+
+             return RedirectToAction("Explore", "Entries");
         }
 
-        // GET: Entries/Edit/5
+        // GET: Comments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,22 +92,22 @@ namespace blog.Controllers
                 return NotFound();
             }
 
-            var entry = await _context.Entry.SingleOrDefaultAsync(m => m.ID == id);
-            if (entry == null)
+            var comment = await _context.Comment.SingleOrDefaultAsync(m => m.ID == id);
+            if (comment == null)
             {
                 return NotFound();
             }
-            return View(entry);
+            return View(comment);
         }
 
-        // POST: Entries/Edit/5
+        // POST: Comments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Author,Content,PublishDate,Title,IsPublic")] Entry entry)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Author,Content,EntryID,PublishDate")] Comment comment)
         {
-            if (id != entry.ID)
+            if (id != comment.ID)
             {
                 return NotFound();
             }
@@ -111,12 +116,12 @@ namespace blog.Controllers
             {
                 try
                 {
-                    _context.Update(entry);
+                    _context.Update(comment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EntryExists(entry.ID))
+                    if (!CommentExists(comment.ID))
                     {
                         return NotFound();
                     }
@@ -127,10 +132,10 @@ namespace blog.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            return View(entry);
+            return View(comment);
         }
 
-        // GET: Entries/Delete/5
+        // GET: Comments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,30 +143,30 @@ namespace blog.Controllers
                 return NotFound();
             }
 
-            var entry = await _context.Entry.SingleOrDefaultAsync(m => m.ID == id);
-            if (entry == null)
+  
+            var comment = await _context.Comment.SingleOrDefaultAsync(m => m.ID == id);
+            if (comment == null)
             {
                 return NotFound();
             }
 
-            return View(entry);
+            return View(comment);
         }
 
-        // POST: Entries/Delete/5
+        // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var entry = await _context.Entry.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Entry.Remove(entry);
+            var comment = await _context.Comment.SingleOrDefaultAsync(m => m.ID == id);
+            _context.Comment.Remove(comment);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
-        private bool EntryExists(int id)
+        private bool CommentExists(int id)
         {
-            return _context.Entry.Any(e => e.ID == id);
+            return _context.Comment.Any(e => e.ID == id);
         }
-
     }
 }

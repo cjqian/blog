@@ -5,59 +5,27 @@
     ViewData["Title"] = "Explore";
 }
 
-<h2>Explore</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PublishDate)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-
-
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Where(n => n.IsPublic == true))
+        @foreach (var item in Model.Where(n => n.IsPublic == true).Reverse())
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PublishDate)
-                </td>
 
-                <td><a asp-action="Details" asp-route-id="@item.ID">
-                    @Html.DisplayFor(modelItem => item.Title)
-                </a></td>
-                <td>
+            <div class="entry-container">
+                <i>@Html.DisplayFor(modelItem => item.PublishDate)</i>
+                <a asp-action="Details" asp-route-id="@item.ID"><h3>@Html.DisplayFor(modelItem => item.Title)</h3></a>
+                <p>@Html.DisplayFor(modelItem => item.Author)</p>
+                <br />
+                <p>
                     @Html.DisplayFor(modelItem => item.Content)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Author)
-                </td>
+                </p>
+                <br />
+                @if (item.Author == User.Identity.Name)
+                {
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                }
 
-                <td>
-                    @if (item.Author == User.Identity.Name){
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> 
-                    }
+                @if (item.Author == User.Identity.Name)
+                {
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                }
 
-                    @if (item.Author == User.Identity.Name)
-                    {
-                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                    }                   
-                </td>
-            </tr>
+            </div>
         }
-    </tbody>
-</table>

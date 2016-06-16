@@ -5,21 +5,21 @@
     ViewData["Title"] = "My Posts";
 }
 
-<h2>My Posts</h2>
-
 @if (!User.Identity.IsAuthenticated)
 {
     <p>Sorry! You need to log in to see your posts!</p>
 
 }
-@foreach (var item in Model.Where(n => n.Author == User.Identity.Name))
+@foreach (var item in Model.Where(n => n.Author == User.Identity.Name).Reverse())
 {
     <div class="entry-container">
         <i>@Html.DisplayFor(modelItem => item.PublishDate)</i>
         <a asp-action="Details" asp-route-id="@item.ID"><h3>@Html.DisplayFor(modelItem => item.Title)</h3></a>
+        <br/>
             <p>
                 @Html.DisplayFor(modelItem => item.Content)
             </p>
+        <br/>
             @if (item.Author == User.Identity.Name)
             {
             <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
@@ -30,6 +30,5 @@
             <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             }
  
-        <a asp-action="Comment" asp-route-id="@item.ID">Comment</a>
     </div>
 }

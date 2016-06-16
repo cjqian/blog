@@ -4,9 +4,19 @@
     ViewData["Title"] = "Details";
 }
 
-<i>@Html.DisplayFor(model => model.PublishDate)</i>
-<h2>@Html.DisplayFor(model => model.Title)</h2>
-<p>@Html.DisplayFor(model => model.Author)</p>
+<div class="entry-container">
+    <i>@Html.DisplayFor(model => model.PublishDate)</i>
+    <h3>@Html.DisplayFor(model => model.Title)</h3>
+    <p>@Html.DisplayFor(model => model.Author)</p>
+    <br />
+    <p>
+        @Html.DisplayFor(model => model.Content)
+    </p>
+    <br />
 
-<p>@Html.DisplayFor(model => model.Content)</p>
-
+    @*@{int EntryID = Model.ID; }*@
+    @*@Html.Partial("~/Views/Shared/CommentCreddate.cshtml", )*@
+    <h4>Comments</h4>
+    @await Component.InvokeAsync("CreateComment", new { EntryID = Model.ID})
+    @await Component.InvokeAsync("ListComment", new { EntryID = Model.ID})
+    </div>

@@ -1,12 +1,29 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+.headeri{
+    color: white;
+}
+h3 {
+    font-family: 'PT Serif', serif;
+}
+
+.entry-container{
+    border-radius: 25px;
+    border: 2px solid #eee;
+    padding: 20px;
+    margin-top:10px;
+    margin-bottom: 10px;
 }
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
+    padding-top:15px;
+   padding-left: 15px;
     padding-right: 15px;
 }
 

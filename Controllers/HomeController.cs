@@ -10,13 +10,9 @@ namespace blog.Controllers
     {
         public IActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Entries");
-            } else
-            {
+
                 return View();
-            }
+
         }
 
         public IActionResult Profile()
