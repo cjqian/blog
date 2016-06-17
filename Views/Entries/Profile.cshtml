@@ -5,12 +5,7 @@
     ViewData["Title"] = "My Posts";
 }
 
-@if (!User.Identity.IsAuthenticated)
-{
-    <p>Sorry! You need to log in to see your posts!</p>
-
-}
-@foreach (var item in Model.Where(n => n.Author == User.Identity.Name).Reverse())
+@foreach (var item in Model.Reverse())
 {
   
     <div class="entry-container">

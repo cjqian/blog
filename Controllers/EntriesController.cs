@@ -31,10 +31,10 @@ namespace blog.Controllers
             return View(await _context.Entry.ToListAsync());
         }
 
-
-        public async Task<IActionResult> Profile()
+        public IActionResult Profile(String ProfileID)
         {
-            return View(await _context.Entry.ToListAsync());
+            var profile = _context.Entry.Where(m => m.Author == ProfileID);
+            return View(profile);
         }
 
         // GET: Entries/Details/5

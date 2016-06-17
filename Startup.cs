@@ -89,10 +89,16 @@ namespace blog
 
             app.UseMvc(routes =>
             {
+
+
+                routes.MapRoute(
+                    "ProfileID",
+                    "Entries/Profile/{ProfileID}",
+                    new { action = "Profile", controller = "Entries" });
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
                 //routes.MapRoute(
                 //    name: "Users",
                 //    url: "Entries/Profile/{id}",
