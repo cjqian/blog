@@ -38,6 +38,7 @@ namespace blog
         }
 
         public IConfigurationRoot Configuration { get; }
+        public object UrlParameter { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -91,6 +92,17 @@ namespace blog
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                //routes.MapRoute(
+                //    name: "Users",
+                //    url: "Entries/Profile/{id}",
+                //    defaults: new
+                //    {
+                //        controller = "Entries",
+                //        action = "Profile",
+                //        id = UrlParameter.Optional
+                //    }
+                //    );
             });
         }
     }

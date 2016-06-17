@@ -3,6 +3,7 @@
 
 
 @foreach (var item in Model) {
+    <hr/>
     <div class="comment-container">
         <b>@Html.DisplayFor(modelItem => item.Author)</b> said at <b>@Html.DisplayFor(modelItem => item.PublishDate)</b>:<br/>
         <p>&nbsp;&nbsp; @Html.DisplayFor(modelItem => item.Content)</p>
@@ -11,7 +12,7 @@
 
     @if (User.Identity.Name == item.Author)
     {
-        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+        <a asp-action="Delete" asp-controller="Comments" asp-route-id="@item.ID">Delete</a>
     }
 
 

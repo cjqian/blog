@@ -12,6 +12,7 @@
 }
 @foreach (var item in Model.Where(n => n.Author == User.Identity.Name).Reverse())
 {
+  
     <div class="entry-container">
         <i>@Html.DisplayFor(modelItem => item.PublishDate)</i>
         <a asp-action="Details" asp-route-id="@item.ID"><h3>@Html.DisplayFor(modelItem => item.Title)</h3></a>

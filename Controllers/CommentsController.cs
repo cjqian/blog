@@ -159,9 +159,12 @@ namespace blog.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var comment = await _context.Comment.SingleOrDefaultAsync(m => m.ID == id);
+            var entryID = comment.EntryID;
+
             _context.Comment.Remove(comment);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Details", "Entries", new { id = entryID });
         }
 
         private bool CommentExists(int id)

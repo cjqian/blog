@@ -74,7 +74,7 @@ namespace blog.Controllers
 
                 _context.Add(entry);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Entries", new { ID = entry.ID });
             }
             return View(entry);
         }
@@ -155,7 +155,7 @@ namespace blog.Controllers
             var entry = await _context.Entry.SingleOrDefaultAsync(m => m.ID == id);
             _context.Entry.Remove(entry);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Profile", "Entries");
         }
 
         private bool EntryExists(int id)
