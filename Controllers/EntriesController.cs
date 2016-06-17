@@ -80,6 +80,7 @@ namespace blog.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Entries", new { ID = entry.ID });
             }
+            
             return View(entry);
         }
 
@@ -157,9 +158,11 @@ namespace blog.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var entry = await _context.Entry.SingleOrDefaultAsync(m => m.ID == id);
+            var author = entry.Author;
+
             _context.Entry.Remove(entry);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Profile", "Entries");
+            return RedirectToAction("Profile", "Entries", new { ProfileID = author });
         }
 
         private bool EntryExists(int id)

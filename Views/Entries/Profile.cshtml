@@ -7,6 +7,10 @@
 
 <center class="profile-header"><h3>@Model.author's Blog</h3></center>
 
+@if(Model.entries.Count() == 0)
+{
+    <center><i>This author has no entries!</i></center>
+}
 @foreach (var item in Model.entries.Reverse())
 {
     @await Component.InvokeAsync("DetailEntry", new { entry= item, showComments= false })

@@ -138,19 +138,24 @@ namespace blog.Controllers
         // GET: Comments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+ 
+
             if (id == null)
             {
                 return NotFound();
             }
 
-  
+
             var comment = await _context.Comment.SingleOrDefaultAsync(m => m.ID == id);
             if (comment == null)
             {
                 return NotFound();
             }
+            // We're not going to have delete confirmation for comments. 
+            // Un-comment for confirmation.
+            //return View(comment);
 
-            return View(comment);
+            return DeleteConfirmed(id); 
         }
 
         // POST: Comments/Delete/5

@@ -8,6 +8,9 @@ body {
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
+.serif-text{
+    font-family: 'PT Serif', serif;
+}
 label{
     font-family: 'PT Serif', serif;
     font-weight: normal;
@@ -18,13 +21,27 @@ label{
 h3, h4 {
     font-family: 'PT Serif', serif;
 }
-
 .entry-container{
     border-radius: 25px;
     border: 2px solid #eee;
     padding: 20px;
     margin-top:10px;
     margin-bottom: 10px;
+}
+.create-container{
+    border-radius: 25px;
+    border: 2px solid #eee;
+    padding: 20px;
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+.title-input {
+    width: 80%;
+}
+
+.content-input{
+    height: 600px;
+    width: 80%;
 }
 
 /* Wrapping element */
@@ -39,8 +56,12 @@ h3, h4 {
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.comment-container {
-    padding: 20px;
+
+.comment-content {
+    padding-left: 20px;
+}
+.comment-delete {
+    padding-left: 20px;
 }
 
 #comment-input {
@@ -49,14 +70,14 @@ h3, h4 {
     height: 30px;
 }
 
-#content-input{
-    height: 600px;
-    width: 100%;
-}
 .comment-submit {
 
 }
 
 .profile-header {
     padding: 10px;
+}
+
+.btn{
+    margin-top: 10px;
 }

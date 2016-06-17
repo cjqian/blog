@@ -40,7 +40,7 @@
                
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-controller="Home" asp-action="Profile" asp-route-ProfileID="@User.Identity.Name">Profile</a></li>
+                        <li><a asp-controller="Entries" asp-action="Profile" asp-route-ProfileID="@User.Identity.Name">Profile</a></li>
                     }
 
                     <li><a asp-controller="Home" asp-action="Explore">Explore</a></li>
