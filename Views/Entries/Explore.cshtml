@@ -5,8 +5,8 @@
     ViewData["Title"] = "Explore";
 }
 
-        @foreach (var item in Model.Where(n => n.IsPublic == true).Reverse())
-        {
-            @await Component.InvokeAsync("DetailEntry", new { entry = item, showComments = false })
+@foreach (var item in Model.Where(n => n.IsPublic == true).Reverse())
+{
+    @await Component.InvokeAsync("DetailEntry", new { entry = item, showComments = false })
 
-        }
+}

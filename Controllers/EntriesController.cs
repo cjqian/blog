@@ -20,12 +20,6 @@ namespace blog.Controllers
         }
 
         // GET: Entries
-        public async Task<IActionResult> Index()
-        {
-            return RedirectToAction("Index", "Home");
-        }
-
-        // GET: Entries
         public async Task<IActionResult> Explore()
         {
             return View(await _context.Entry.ToListAsync());
@@ -33,10 +27,13 @@ namespace blog.Controllers
 
         public async Task<IActionResult> Profile(String ProfileID)
         {
-            var curEntries = await _context.Entry.Where(m => m.Author == ProfileID).ToListAsync();
+            var publicEntries = await _context.Entry.Where(m => m.Author == ProfileID && m.IsPublic).ToListAsync();
+            var privateEntries = await _context.Entry.Where(m => m.Author == ProfileID && !m.IsPublic).ToListAsync();
+
             Profile profile = new Profile();
             profile.author = ProfileID;
-            profile.entries = curEntries;
+            profile.publicEntries = publicEntries;
+            profile.privateEntries = privateEntries;
 
             return View(profile);
         }
@@ -130,7 +127,8 @@ namespace blog.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
+
+                return View(entry);
             }
             return View(entry);
         }

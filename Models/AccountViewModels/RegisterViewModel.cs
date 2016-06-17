@@ -15,7 +15,6 @@ namespace blog.Models.AccountViewModels
 
         [Required]
         [Key]
-        [RegularExpression(@"/^\S *$/)", ErrorMessage = "No spaces!")]
         [Display(Name = "Username")]
         public string UserName { get; set; }
 

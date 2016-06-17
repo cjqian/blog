@@ -223,6 +223,9 @@
 -r:"C:\Users\t-crqian\.nuget\packages\System.Xml.ReaderWriter\4.0.11-rc2-24027\ref\netstandard1.3\System.Xml.ReaderWriter.dll"
 -r:"C:\Users\t-crqian\.nuget\packages\System.Xml.XDocument\4.0.11-rc2-24027\ref\netstandard1.3\System.Xml.XDocument.dll"
 -resource:"C:\Users\t-crqian\documents\visual studio 2015\Projects\blog\src\blog\obj\Debug\netcoreapp1.0\blogdotnet-compile.deps.json",blog.deps.json
+"C:\Users\t-crqian\documents\visual studio 2015\Projects\blog\src\blog\CreateCommentViewComponent.cs"
+"C:\Users\t-crqian\documents\visual studio 2015\Projects\blog\src\blog\DetailEntryViewComponent.cs"
+"C:\Users\t-crqian\documents\visual studio 2015\Projects\blog\src\blog\ListCommentViewComponent.cs"
 "C:\Users\t-crqian\documents\visual studio 2015\Projects\blog\src\blog\Program.cs"
 "C:\Users\t-crqian\documents\visual studio 2015\Projects\blog\src\blog\Startup.cs"
 "C:\Users\t-crqian\documents\visual studio 2015\Projects\blog\src\blog\Controllers\AccountController.cs"

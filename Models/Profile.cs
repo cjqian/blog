@@ -7,7 +7,8 @@ namespace blog.Models
 {
     public class Profile
     {
-        public IEnumerable<Entry> entries;
+        public IEnumerable<Entry> publicEntries;
+        public IEnumerable<Entry> privateEntries;
         public string author;
     }
 }

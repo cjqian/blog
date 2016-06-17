@@ -1,10 +1,10 @@
 @model IEnumerable<blog.Models.Comment>
 
-
-@foreach (var item in Model) {
-    <hr/>
+@foreach (var item in Model)
+{
+    <hr />
     <div class="comment-container">
-        <i>@Html.DisplayFor(modelItem => item.Author)</i> said at <i>@Html.DisplayFor(modelItem => item.PublishDate)</i>:<br/>
+        <i>@Html.DisplayFor(modelItem => item.Author)</i> said at <i>@Html.DisplayFor(modelItem => item.PublishDate)</i>:<br />
         <p class="comment-content">@Html.DisplayFor(modelItem => item.Content)</p>
 
         @if (User.Identity.Name == item.Author)
@@ -13,7 +13,4 @@
         }
 
     </div>
-
-
-
 }

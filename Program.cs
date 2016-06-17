@@ -11,47 +11,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace blog
 {
-    public class DetailEntryViewComponent : ViewComponent
-    {
-        public IViewComponentResult Invoke(Entry entry, bool showComments)
-        {
-            if (showComments)
-            {
-                return View("/View/Entries/Details.cshtml", new { ID = entry.ID });
-            }
-            else return View("/Views/Shared/EntryPreview.cshtml", entry);
-        }
-    }
-
-    public class CreateCommentViewComponent : ViewComponent
-    {
-        public IViewComponentResult Invoke(int entryID)
-        {
-            var comment = new Comment();
-            comment.EntryID = entryID;
-            return View("/Views/Shared/CommentCreate.cshtml", comment);
-        }
-    }
-
-    public class ListCommentViewComponent : ViewComponent
-    {
-        private readonly ApplicationDbContext _context;
-
-        public ListCommentViewComponent(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<IViewComponentResult> InvokeAsync(int entryID)
-        {
-            //var comment = new Comment();
-            //comment.EntryID = entryID;
-            //return View("/Views/Shared/CommentList.cshtml");
-            var comments = _context.Comment.Where(c => c.EntryID == entryID);
-            return View("/Views/Shared/CommentList.cshtml", await comments.ToListAsync());
-        }
-    }
-
     public class Program
     {
         public static void Main(string[] args)

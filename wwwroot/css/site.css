@@ -8,38 +8,44 @@ body {
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
-.serif-text{
+.serif-text {
     font-family: 'PT Serif', serif;
 }
-label{
+
+label {
     font-family: 'PT Serif', serif;
     font-weight: normal;
 }
-.headeri{
+
+.headeri {
     color: white;
 }
+
 h3, h4 {
     font-family: 'PT Serif', serif;
 }
-.entry-container{
+
+.entry-container {
     border-radius: 25px;
     border: 2px solid #eee;
     padding: 20px;
-    margin-top:10px;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
-.create-container{
+
+.create-container {
     border-radius: 25px;
     border: 2px solid #eee;
     padding: 20px;
-    margin-top:10px;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
+
 .title-input {
     width: 80%;
 }
 
-.content-input{
+.content-input {
     height: 600px;
     width: 80%;
 }
@@ -47,8 +53,8 @@ h3, h4 {
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-top:15px;
-   padding-left: 15px;
+    padding-top: 15px;
+    padding-left: 15px;
     padding-right: 15px;
 }
 
@@ -60,6 +66,7 @@ h3, h4 {
 .comment-content {
     padding-left: 20px;
 }
+
 .comment-delete {
     padding-left: 20px;
 }
@@ -71,13 +78,12 @@ h3, h4 {
 }
 
 .comment-submit {
-
 }
 
 .profile-header {
     padding: 10px;
 }
 
-.btn{
+.btn {
     margin-top: 10px;
 }

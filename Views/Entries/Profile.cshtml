@@ -7,12 +7,30 @@
 
 <center class="profile-header"><h3>@Model.author's Blog</h3></center>
 
-@if(Model.entries.Count() == 0)
+@*Public Entries*@
+@if(Model.publicEntries.Count() == 0)
 {
-    <center><i>This author has no entries!</i></center>
+    <center><i>This author has no public entries!</i></center>
 }
-@foreach (var item in Model.entries.Reverse())
+@foreach (var item in Model.publicEntries.Reverse())
 {
     @await Component.InvokeAsync("DetailEntry", new { entry= item, showComments= false })
 
+}
+
+<br/><br/>
+
+@*Private Entries*@
+@if (User.Identity.Name == Model.author)
+{
+    @if (Model.privateEntries.Count() > 0)
+    {
+        <h4>Private Entries</h4>
+    }
+
+    @foreach (var item in Model.privateEntries.Reverse())
+    {
+        @await Component.InvokeAsync("DetailEntry", new { entry = item, showComments = false })
+
+    }
 }
