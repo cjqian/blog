@@ -6,15 +6,11 @@
 
 <div class="entry-container">
     <i>@Html.DisplayFor(model => model.PublishDate)</i>
-    <h3>@Html.DisplayFor(model => model.Title)</h3>
+    <a asp-controller="Entries" asp-action="Details" asp-route-id="@Model.ID"><h3>@Html.DisplayFor(model => model.Title)</h3></a>
     <a asp-controller="Entries" asp-action="Profile" asp-route-ProfileID="@Model.Author"><p>@Html.DisplayFor(model => model.Author)</p></a>
     <br />
     <p>
         @Html.DisplayFor(model => model.Content)
     </p>
     <br />
-
-    <h4>Comments</h4>
-    @await Component.InvokeAsync("CreateComment", new { EntryID = Model.ID})
-    @await Component.InvokeAsync("ListComment", new { EntryID = Model.ID})
-    </div>
+</div>

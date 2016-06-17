@@ -31,9 +31,13 @@ namespace blog.Controllers
             return View(await _context.Entry.ToListAsync());
         }
 
-        public IActionResult Profile(String ProfileID)
+        public async Task<IActionResult> Profile(String ProfileID)
         {
-            var profile = _context.Entry.Where(m => m.Author == ProfileID);
+            var curEntries = await _context.Entry.Where(m => m.Author == ProfileID).ToListAsync();
+            Profile profile = new Profile();
+            profile.author = ProfileID;
+            profile.entries = curEntries;
+
             return View(profile);
         }
 

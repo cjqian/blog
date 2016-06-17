@@ -1,13 +1,21 @@
-﻿body {
+﻿#title {
+    font-family: 'PT Serif', serif;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
+label{
+    font-family: 'PT Serif', serif;
+    font-weight: normal;
+}
 .headeri{
     color: white;
 }
-h3 {
+h3, h4 {
     font-family: 'PT Serif', serif;
 }
 
@@ -27,35 +35,28 @@ h3 {
     padding-right: 15px;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
-input,
-select,
-textarea {
-    max-width: 280px;
+.comment-submit {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.comment-container {
+    padding: 20px;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+#comment-input {
+    margin-top: 10px;
+    width: 100%;
+    height: 30px;
 }
 
-/* buttons and links extension to use brackets: [ click me ] */
-.btn-bracketed::before {
-    display:inline-block;
-    content: "[";
-    padding-right: 0.5em;
+#content-input{
+    height: 600px;
+    width: 100%;
 }
-.btn-bracketed::after {
-    display:inline-block;
-    content: "]";
-    padding-left: 0.5em;
+.comment-submit {
+
 }
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-  /* Hide captions */
-  .carousel-caption {
-    display: none
-  }
+.profile-header {
+    padding: 10px;
 }

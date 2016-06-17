@@ -10,26 +10,20 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Title" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Title" class="form-control" />
+                <input asp-for="Title"/>
                 <span asp-validation-for="Title" class="text-danger" />
-            </div>
         </div>
 
         <div class="form-group">
             <label asp-for="Content" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Content" class="form-control" />
+                <textarea asp-for="Content" class="content-input"></textarea>
                 <span asp-validation-for="Content" class="text-danger" />
-            </div>
         </div>
 
         <div class="form-group">
             <label asp-for="IsPublic" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
                 <input asp-for="IsPublic" type="checkbox" />
                 <span asp-validation-for="IsPublic" class="text-danger" />
-            </div>
         </div>
 
         <div class="form-group">

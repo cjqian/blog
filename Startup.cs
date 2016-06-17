@@ -58,6 +58,9 @@ namespace blog
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            // Add script manager service
+            services.AddScoped<ScriptManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
