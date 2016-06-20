@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using blog.Data;
-using blog.Models;
-using blog.Services;
+using Blog.Data;
+using Blog.Models;
+using Blog.Services;
 
-namespace blog
+namespace Blog
 {
     public class Startup
     {
@@ -38,7 +38,6 @@ namespace blog
         }
 
         public IConfigurationRoot Configuration { get; }
-        public object UrlParameter { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -92,8 +91,6 @@ namespace blog
 
             app.UseMvc(routes =>
             {
-
-
                 routes.MapRoute(
                     "ProfileID",
                     "Entries/Profile/{ProfileID}",

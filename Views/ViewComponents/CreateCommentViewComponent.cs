@@ -1,11 +1,11 @@
-﻿using blog.Models;
+﻿using Blog.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace blog
+namespace Blog
 {
     public class CreateCommentViewComponent : ViewComponent
     {
@@ -13,7 +13,7 @@ namespace blog
         {
             var comment = new Comment();
             comment.EntryID = entryID;
-            return View("/Views/Shared/CommentCreate.cshtml", comment);
+            return View(comment);
         }
     }
 

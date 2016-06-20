@@ -5,11 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using blog.Models;
-using blog.Data;
+using Blog.Models;
+using Blog.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace blog
+namespace Blog
 {
     public class Program
     {

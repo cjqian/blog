@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace blog.Models.ManageViewModels
+namespace Blog.Models.ManageViewModels
 {
     public class RemoveLoginViewModel
     {

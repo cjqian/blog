@@ -37,7 +37,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-               
+
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li><a asp-controller="Entries" asp-action="Profile" asp-route-ProfileID="@User.Identity.Name">Profile</a></li>
@@ -74,12 +74,10 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-    
-    @{ 
-        foreach(var script in scriptManager)
-        {
-            <script src="~/js/@script"></script>
-        }
+
+    @foreach (var script in scriptManager)
+    {
+        <script src="~/js/@script"></script>
     }
 
     @RenderSection("scripts", required: false)

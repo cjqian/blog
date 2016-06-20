@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using blog.Data;
+using Blog.Data;
 
-namespace blog.Data.Migrations
+namespace Blog.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -16,7 +16,7 @@ namespace blog.Data.Migrations
                 .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("blog.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Blog.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id");
 
@@ -64,7 +64,7 @@ namespace blog.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("blog.Models.Comment", b =>
+            modelBuilder.Entity("Blog.Models.Comment", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -82,7 +82,7 @@ namespace blog.Data.Migrations
                     b.ToTable("Comment");
                 });
 
-            modelBuilder.Entity("blog.Models.Entry", b =>
+            modelBuilder.Entity("Blog.Models.Entry", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -219,7 +219,7 @@ namespace blog.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("blog.Models.ApplicationUser")
+                    b.HasOne("Blog.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -227,7 +227,7 @@ namespace blog.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("blog.Models.ApplicationUser")
+                    b.HasOne("Blog.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -240,7 +240,7 @@ namespace blog.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("blog.Models.ApplicationUser")
+                    b.HasOne("Blog.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -1,4 +1,4 @@
-@model blog.Models.Entry
+@model Blog.Models.Entry
 
 @{
     ViewData["Title"] = "Delete";
@@ -8,7 +8,7 @@
 
 <p>Are you sure you want to delete this?</p>
 <div>
-  @await Component.InvokeAsync("DetailEntry", new { entry = Model, showComments = false }) 
+  @await Component.InvokeAsync("EntryPreview", new { entry = Model }) 
     
     <form asp-action="Delete">
         <div class="form-actions no-color">

@@ -1,10 +1,13 @@
-@using blog.Services
-@model blog.Models.Comment
+@using Blog.Services
+@model Blog.Models.Comment
 
-@{ scriptManager.Add("comments.js"); }
+@{ 
+    scriptManager.Add("comments.js");
+ }
 
+
+<div asp-validation-summary="All" class="text-danger"></div>
 <form id="comment-form" asp-action="Create" asp-controller="Comments">
-
     <div class="form-horizontal">
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -16,6 +19,3 @@
     </div>
 </form>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

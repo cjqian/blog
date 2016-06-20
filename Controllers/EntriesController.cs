@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using blog.Data;
-using blog.Models;
+using Blog.Data;
+using Blog.Models;
 
-namespace blog.Controllers
+namespace Blog.Controllers
 {
     public class EntriesController : Controller
     {
@@ -28,12 +28,16 @@ namespace blog.Controllers
         public async Task<IActionResult> Profile(String ProfileID)
         {
             var publicEntries = await _context.Entry.Where(m => m.Author == ProfileID && m.IsPublic).ToListAsync();
-            var privateEntries = await _context.Entry.Where(m => m.Author == ProfileID && !m.IsPublic).ToListAsync();
 
             Profile profile = new Profile();
-            profile.author = ProfileID;
-            profile.publicEntries = publicEntries;
-            profile.privateEntries = privateEntries;
+            profile.Author = ProfileID;
+            profile.PublicEntries = publicEntries;
+
+            if (User.Identity.Name == ProfileID)
+            {
+                var privateEntries = await _context.Entry.Where(m => m.Author == ProfileID && !m.IsPublic).ToListAsync();
+                profile.PrivateEntries = privateEntries;
+            }
 
             return View(profile);
         }
@@ -52,6 +56,12 @@ namespace blog.Controllers
                 return NotFound();
             }
 
+            // A user can't get details on a private post he/she did not author.
+            if (!entry.IsPublic && User.Identity.Name != entry.Author)
+            {
+                return new BadRequestObjectResult("You are not authorized to view this post.");
+            }
+
             return View(entry);
         }
 
@@ -66,8 +76,14 @@ namespace blog.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Author,Content,PublishDate,Title,IsPublic")] Entry entry)
+        public async Task<IActionResult> Create([Bind("Content,Title,IsPublic")] Entry entry)
         {
+            //Only logged-in users can create a post.
+            if (User.Identity.Name == null)
+            {
+                return new BadRequestObjectResult("Only logged-in users can create posts. How did you even get here?");
+            }
+
             if (ModelState.IsValid)
             {
                 entry.Author = User.Identity.Name;
@@ -94,6 +110,13 @@ namespace blog.Controllers
             {
                 return NotFound();
             }
+
+            //Only the author of the post has permission to edit.
+            if (entry.Author != User.Identity.Name)
+            {
+                return new BadRequestObjectResult("You do not have permission to edit this post.");
+            }
+
             return View(entry);
         }
 
@@ -102,13 +125,13 @@ namespace blog.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Author,Content,PublishDate,Title,IsPublic")] Entry entry)
+        public async Task<IActionResult> Edit(int id, [Bind("Content,Title,IsPublic")] Entry entry)
         {
             if (id != entry.ID)
             {
                 return NotFound();
             }
-
+           
             if (ModelState.IsValid)
             {
                 try
@@ -145,6 +168,13 @@ namespace blog.Controllers
             if (entry == null)
             {
                 return NotFound();
+            }
+            
+
+            //Only the author of the entry can delete.
+            if (entry.Author != User.Identity.Name)
+            {
+                return new BadRequestObjectResult("You do not have permission to delete this post.");
             }
 
             return View(entry);

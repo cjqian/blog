@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using blog.Models;
-using blog.Models.ManageViewModels;
-using blog.Services;
+using Blog.Models;
+using Blog.Models.ManageViewModels;
+using Blog.Services;
 
-namespace blog.Controllers
+namespace Blog.Controllers
 {
     [Authorize]
     public class ManageController : Controller

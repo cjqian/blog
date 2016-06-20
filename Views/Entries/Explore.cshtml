@@ -1,5 +1,5 @@
 @inject UserManager<ApplicationUser> UserManager
-@model IEnumerable<blog.Models.Entry>
+@model IEnumerable<Blog.Models.Entry>
 
 @{
     ViewData["Title"] = "Explore";
@@ -7,6 +7,6 @@
 
 @foreach (var item in Model.Where(n => n.IsPublic == true).Reverse())
 {
-    @await Component.InvokeAsync("DetailEntry", new { entry = item, showComments = false })
+    @await Component.InvokeAsync("EntryPreview", new { entry = item })
 
 }

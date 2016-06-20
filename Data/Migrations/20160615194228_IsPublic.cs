@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace blog.Data.Migrations
+namespace Blog.Data.Migrations
 {
     public partial class IsPublic : Migration
     {

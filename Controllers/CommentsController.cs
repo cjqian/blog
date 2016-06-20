@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using blog.Data;
-using blog.Models;
+using Blog.Data;
+using Blog.Models;
 
-namespace blog.Controllers
+namespace Blog.Controllers
 {
     public class CommentsController : Controller
     {
@@ -24,22 +24,32 @@ namespace blog.Controllers
         {
             return View();
         }
-
+        
         // POST: Comments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Content,EntryID")] Comment comment)
+        public async Task<IActionResult> Create([Bind("Content,EntryID")] Comment comment)
         {
+            var entry = _context.Entry.SingleOrDefaultAsync(e => e.ID == comment.EntryID);
+
+            // No anonymous comments!
+            if (User.Identity.Name == null)
+            {
+                return new BadRequestObjectResult("You have to be logged in to comment!");
+            }
+
+            // We need to make sure a comment is not made on a private post if the commenter is not the author of the post.
+            if (!entry.Result.IsPublic && User.Identity.Name != entry.Result.Author)
+            {
+                return new BadRequestObjectResult("What?? How did you get here? You're not supposed to be able to comment on this PRIVATE post!!");
+            }
+
             if (ModelState.IsValid)
             {
                 comment.Author = User.Identity.Name;
 
-                if (comment.Author == null)
-                {
-                    comment.Author = "Anonymous";
-                }
                 comment.PublishDate = DateTime.Now;
 
                 _context.Add(comment);
@@ -48,7 +58,8 @@ namespace blog.Controllers
 
                 return RedirectToAction("Details", "Entries", new { ID = comment.EntryID });
             }
-
+            
+            //An error occured
             return RedirectToAction("Explore", "Entries");
         }
 
@@ -66,8 +77,12 @@ namespace blog.Controllers
                 return NotFound();
             }
 
-            // We're not going to have delete confirmation for comments. 
-            // Un-comment for confirmation.
+            // Only the author of the comment can delete it.
+            if (comment.Author != User.Identity.Name)
+            {
+                return new BadRequestObjectResult("You are not allowed to delete this.");
+            }
+
             return View(comment);
         }
 
@@ -78,6 +93,12 @@ namespace blog.Controllers
         {
             var comment = await _context.Comment.SingleOrDefaultAsync(m => m.ID == id);
             var entryID = comment.EntryID;
+            
+            //Only the author of the comment can delete it.
+            if (comment.Author != User.Identity.Name)
+            {
+                return new BadRequestObjectResult("You are not allowed to delete this.");
+            }
 
             _context.Comment.Remove(comment);
             await _context.SaveChangesAsync();

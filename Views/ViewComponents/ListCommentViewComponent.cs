@@ -1,4 +1,4 @@
-﻿using blog.Data;
+﻿using Blog.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace blog
+namespace Blog
 {
     public class ListCommentViewComponent : ViewComponent
     {
@@ -19,11 +19,8 @@ namespace blog
 
         public async Task<IViewComponentResult> InvokeAsync(int entryID)
         {
-            //var comment = new Comment();
-            //comment.EntryID = entryID;
-            //return View("/Views/Shared/CommentList.cshtml");
             var comments = _context.Comment.Where(c => c.EntryID == entryID);
-            return View("/Views/Shared/CommentList.cshtml", await comments.ToListAsync());
+            return View(await comments.ToListAsync());
         }
     }
 

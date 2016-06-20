@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using blog.Models;
-using blog.Models.AccountViewModels;
-using blog.Services;
+using Blog.Models;
+using Blog.Models.AccountViewModels;
+using Blog.Services;
 
-namespace blog.Controllers
+namespace Blog.Controllers
 {
     [Authorize]
     public class AccountController : Controller

@@ -1,36 +1,33 @@
 ﻿@inject UserManager<ApplicationUser> UserManager
-@model blog.Models.Profile
+@model Blog.Models.Profile
 
 @{
     ViewData["Title"] = User.Identity.Name + "'s Profile";
 }
 
-<center class="profile-header"><h3>@Model.author's Blog</h3></center>
+<center class="profile-header"><h3>@Model.Author's Blog</h3></center>
 
 @*Public Entries*@
-@if(Model.publicEntries.Count() == 0)
+@if (Model.PublicEntries.Count() == 0)
 {
     <center><i>This author has no public entries!</i></center>
 }
-@foreach (var item in Model.publicEntries.Reverse())
+@foreach (var item in Model.PublicEntries.Reverse())
 {
-    @await Component.InvokeAsync("DetailEntry", new { entry= item, showComments= false })
+    @await Component.InvokeAsync("EntryPreview", new { entry = item })
 
 }
 
-<br/><br/>
+<br /><br />
 
 @*Private Entries*@
-@if (User.Identity.Name == Model.author)
+@if (Model.PrivateEntries.Count() > 0)
 {
-    @if (Model.privateEntries.Count() > 0)
-    {
-        <h4>Private Entries</h4>
-    }
+    <h4>Private Entries</h4>
+}
 
-    @foreach (var item in Model.privateEntries.Reverse())
-    {
-        @await Component.InvokeAsync("DetailEntry", new { entry = item, showComments = false })
+@foreach (var item in Model.PrivateEntries.Reverse())
+{
+    @await Component.InvokeAsync("EntryPreview", new { entry = item })
 
-    }
 }
