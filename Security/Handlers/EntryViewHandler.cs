@@ -12,10 +12,7 @@ namespace Blog
     {
         protected override void Handle(AuthorizationContext context, ViewRequirement requirement, Entry resource)
         {
-            if (!resource.IsPublic && context.User.Identity.Name != resource.Author)
-            {
-                context.Fail();
-            } else
+            if (resource.IsPublic || context.User.Identity.Name == resource.Author)
             {
                 context.Succeed(requirement);
             }

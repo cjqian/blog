@@ -63,8 +63,8 @@ namespace Blog
             services.AddScoped<ScriptManager>();
 
             // Add handlers for authentication.
-            services.AddSingleton<IAuthorizationHandler, EntryModifyHandler>();
-            services.AddSingleton<IAuthorizationHandler, CommentModifyHandler>();
+            //services.AddSingleton<IAuthorizationHandler, EntryModifyHandler>();
+            //services.AddSingleton<IAuthorizationHandler, CommentModifyHandler>();
             services.AddSingleton<IAuthorizationHandler, EntryViewHandler>();
         }
 
