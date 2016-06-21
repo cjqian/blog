@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Blog.Data;
 using Blog.Models;
 using Blog.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog
 {
@@ -60,6 +61,11 @@ namespace Blog
 
             // Add script manager service
             services.AddScoped<ScriptManager>();
+
+            // Add handlers for authentication.
+            services.AddSingleton<IAuthorizationHandler, EntryModifyHandler>();
+            services.AddSingleton<IAuthorizationHandler, CommentModifyHandler>();
+            services.AddSingleton<IAuthorizationHandler, EntryViewHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,17 +105,8 @@ namespace Blog
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-                //routes.MapRoute(
-                //    name: "Users",
-                //    url: "Entries/Profile/{id}",
-                //    defaults: new
-                //    {
-                //        controller = "Entries",
-                //        action = "Profile",
-                //        id = UrlParameter.Optional
-                //    }
-                //    );
             });
+
         }
     }
 }

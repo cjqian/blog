@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog.Data;
 using Blog.Models;
@@ -15,13 +13,15 @@ namespace Blog.Controllers
     public class CommentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IAuthorizationService _authorizationService;
 
-        public CommentsController(ApplicationDbContext context)
+        public CommentsController(ApplicationDbContext context, IAuthorizationService authorizationService)
         {
             _context = context;
+            _authorizationService = authorizationService;
         }
 
-         // GET: Comments/Create
+        // GET: Comments/Create
         [HttpGet]
         public IActionResult Create()
         {
@@ -38,9 +38,9 @@ namespace Blog.Controllers
             var entry = _context.Entry.SingleOrDefaultAsync(e => e.ID == comment.EntryID);
 
             // We need to make sure a comment is not made on a private post if the commenter is not the author of the post.
-            if (!entry.Result.IsPublic && User.Identity.Name != entry.Result.Author)
+            if (!await _authorizationService.AuthorizeAsync(User, entry, new ViewRequirement()))
             {
-                return new BadRequestObjectResult("What?? How did you get here? You're not supposed to be able to comment on this PRIVATE post!!");
+                return View("Error");
             }
 
             if (ModelState.IsValid)
@@ -57,7 +57,7 @@ namespace Blog.Controllers
             }
 
             //An error occured
-            //Was it the comment length?
+            //Was it the comment length? We have to check here instead of returning the comment because the comments exist in a partial view.
             if (comment.Content.Length < comment.MIN_LENGTH || comment.Content.Length > comment.MAX_LENGTH)
             {
                 return new BadRequestObjectResult("Your comment has to be at least (" + comment.MIN_LENGTH + ") characters and less than (" + comment.MAX_LENGTH + ") characters.");
@@ -72,19 +72,19 @@ namespace Blog.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             var comment = await _context.Comment.SingleOrDefaultAsync(m => m.ID == id);
             if (comment == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
-            // Only the author of the comment can delete it.
-            if (comment.Author != User.Identity.Name)
+            //Only the author should be able to delete. 
+            if (!await _authorizationService.AuthorizeAsync(User, comment, new ModifyRequirement()))
             {
-                return new BadRequestObjectResult("You are not allowed to delete this.");
+                return View("Error");
             }
 
             return View(comment);
@@ -97,12 +97,6 @@ namespace Blog.Controllers
         {
             var comment = await _context.Comment.SingleOrDefaultAsync(m => m.ID == id);
             var entryID = comment.EntryID;
-            
-            //Only the author of the comment can delete it.
-            if (comment.Author != User.Identity.Name)
-            {
-                return new BadRequestObjectResult("You are not allowed to delete this.");
-            }
 
             _context.Comment.Remove(comment);
             await _context.SaveChangesAsync();

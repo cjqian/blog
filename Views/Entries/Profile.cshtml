@@ -21,6 +21,8 @@
 <br /><br />
 
 @*Private Entries*@
+@if(Model.Author == User.Identity.Name)
+{
 @if (Model.PrivateEntries.Count() > 0)
 {
     <h4>Private Entries</h4>
@@ -30,4 +32,5 @@
 {
     @await Component.InvokeAsync("EntryPreview", new { entry = item })
 
+}
 }

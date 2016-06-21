@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog.Data;
 using Blog.Models;
@@ -12,14 +10,15 @@ using Microsoft.AspNetCore.Authorization;
 namespace Blog.Controllers
 {
     [Authorize]
-
     public class EntriesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IAuthorizationService _authorizationService;
 
-        public EntriesController(ApplicationDbContext context)
+        public EntriesController(ApplicationDbContext context, IAuthorizationService authorizationService)
         {
-            _context = context;    
+            _context = context;
+            _authorizationService = authorizationService;
         }
 
         // GET: Entries
@@ -57,19 +56,19 @@ namespace Blog.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             var entry = await _context.Entry.SingleOrDefaultAsync(m => m.ID == id);
             if (entry == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             // A user can't get details on a private post he/she did not author.
-            if (!entry.IsPublic && User.Identity.Name != entry.Author)
+            if (!await _authorizationService.AuthorizeAsync(User, entry, new ViewRequirement()))
             {
-                return new BadRequestObjectResult("You are not authorized to view this post.");
+                return View("Error");
             }
 
             return View(entry);
@@ -108,19 +107,19 @@ namespace Blog.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             var entry = await _context.Entry.SingleOrDefaultAsync(m => m.ID == id);
             if (entry == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
-            //Only the author of the post has permission to edit.
-            if (entry.Author != User.Identity.Name)
+            //Only the author should be able to edit. 
+            if (!await _authorizationService.AuthorizeAsync(User, entry, new ModifyRequirement()))
             {
-                return new BadRequestObjectResult("You do not have permission to edit this post.");
+                return View("Error");
             }
 
             return View(entry);
@@ -135,7 +134,7 @@ namespace Blog.Controllers
         {
             if (id != entry.ID)
             {
-                return NotFound();
+                return View("Error");
             }
            
             if (ModelState.IsValid)
@@ -149,7 +148,7 @@ namespace Blog.Controllers
                 {
                     if (!EntryExists(entry.ID))
                     {
-                        return NotFound();
+                        return View("Error");
                     }
                     else
                     {
@@ -159,6 +158,7 @@ namespace Blog.Controllers
 
                 return View(entry);
             }
+
             return View(entry);
         }
 
@@ -168,20 +168,20 @@ namespace Blog.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             var entry = await _context.Entry.SingleOrDefaultAsync(m => m.ID == id);
             if (entry == null)
             {
-                return NotFound();
+                return View("Error");
             }
-            
 
-            //Only the author of the entry can delete.
-            if (entry.Author != User.Identity.Name)
+            //Only the author should be able to delete. 
+            if (!await _authorizationService.AuthorizeAsync(User, entry, new ModifyRequirement()))
             {
-                return new BadRequestObjectResult("You do not have permission to delete this post.");
+
+                return View("Error");
             }
 
             return View(entry);
@@ -204,6 +204,5 @@ namespace Blog.Controllers
         {
             return _context.Entry.Any(e => e.ID == id);
         }
-
     }
 }
