@@ -43,7 +43,7 @@
                         <li><a asp-controller="Entries" asp-action="Profile" asp-route-ProfileID="@User.Identity.Name">Profile</a></li>
                     }
 
-                    <li><a asp-controller="Home" asp-action="Explore">Explore</a></li>
+                    <li><a asp-controller="Entries" asp-action="Explore">Explore</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog.Data;
 using Blog.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog.Controllers
 {
+    [Authorize]
+
     public class EntriesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,11 +23,15 @@ namespace Blog.Controllers
         }
 
         // GET: Entries
+        [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Explore()
         {
             return View(await _context.Entry.ToListAsync());
         }
 
+        [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Profile(String ProfileID)
         {
             var publicEntries = await _context.Entry.Where(m => m.Author == ProfileID && m.IsPublic).ToListAsync();
@@ -33,6 +40,7 @@ namespace Blog.Controllers
             profile.Author = ProfileID;
             profile.PublicEntries = publicEntries;
 
+            // Only pass private entries if the user has the correct credentials.
             if (User.Identity.Name == ProfileID)
             {
                 var privateEntries = await _context.Entry.Where(m => m.Author == ProfileID && !m.IsPublic).ToListAsync();
@@ -43,6 +51,8 @@ namespace Blog.Controllers
         }
 
         // GET: Entries/Details/5
+        [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -66,6 +76,7 @@ namespace Blog.Controllers
         }
 
         // GET: Entries/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -78,13 +89,7 @@ namespace Blog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Content,Title,IsPublic")] Entry entry)
         {
-            //Only logged-in users can create a post.
-            if (User.Identity.Name == null)
-            {
-                return new BadRequestObjectResult("Only logged-in users can create posts. How did you even get here?");
-            }
-
-            if (ModelState.IsValid)
+             if (ModelState.IsValid)
             {
                 entry.Author = User.Identity.Name;
                 entry.PublishDate = DateTime.Now;
@@ -98,6 +103,7 @@ namespace Blog.Controllers
         }
 
         // GET: Entries/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -157,6 +163,7 @@ namespace Blog.Controllers
         }
 
         // GET: Entries/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

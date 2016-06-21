@@ -8,6 +8,9 @@ namespace Blog.Models
 {
     public class Comment
     {
+        public readonly int MIN_LENGTH = 2;
+        public readonly int MAX_LENGTH = 1000;
+
         public string Author { get; set; }
 
         // For content validation, make sure that the content is within a reasonable length. 

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog.Data;
 using Blog.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog.Controllers
 {
+    [Authorize]
     public class CommentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,6 +22,7 @@ namespace Blog.Controllers
         }
 
          // GET: Comments/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -33,12 +36,6 @@ namespace Blog.Controllers
         public async Task<IActionResult> Create([Bind("Content,EntryID")] Comment comment)
         {
             var entry = _context.Entry.SingleOrDefaultAsync(e => e.ID == comment.EntryID);
-
-            // No anonymous comments!
-            if (User.Identity.Name == null)
-            {
-                return new BadRequestObjectResult("You have to be logged in to comment!");
-            }
 
             // We need to make sure a comment is not made on a private post if the commenter is not the author of the post.
             if (!entry.Result.IsPublic && User.Identity.Name != entry.Result.Author)
@@ -58,12 +55,19 @@ namespace Blog.Controllers
 
                 return RedirectToAction("Details", "Entries", new { ID = comment.EntryID });
             }
-            
+
             //An error occured
-            return RedirectToAction("Explore", "Entries");
+            //Was it the comment length?
+            if (comment.Content.Length < comment.MIN_LENGTH || comment.Content.Length > comment.MAX_LENGTH)
+            {
+                return new BadRequestObjectResult("Your comment has to be at least (" + comment.MIN_LENGTH + ") characters and less than (" + comment.MAX_LENGTH + ") characters.");
+            }
+
+            return RedirectToAction("Details", "Entries", new { ID = comment.EntryID });
         }
 
         // GET: Comments/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
